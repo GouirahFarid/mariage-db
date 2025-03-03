@@ -1,10 +1,18 @@
 CREATE TABLE IF NOT EXISTS type_acte (
     id INTEGER PRIMARY KEY,
-    libelle VARCHAR(50) UNIQUE
+    libelle VARCHAR(50) UNIQUE CHECK (libelle IN (
+        'Certificat de mariage',
+        'Contrat de mariage',
+        'Divorce',
+        'Mariage',
+        'Promesse de mariage - fiançailles',
+        'Publication de mariage',
+        'Rectification de mariage'
+    ))
 );
 
 CREATE TABLE IF NOT EXISTS departement (
-    code VARCHAR(2) PRIMARY KEY,
+    code VARCHAR(2) PRIMARY KEY CHECK (code IN ('44', '49', '79', '85')),
     nom VARCHAR(50) NOT NULL
 );
 
@@ -32,7 +40,6 @@ CREATE TABLE IF NOT EXISTS acte_mariage (
     commune_id INTEGER REFERENCES commune(id),
     date_acte VARCHAR(20),
     num_vue VARCHAR(20)
---     UNIQUE(commune_id, date_acte, num_vue)
 );
 
 -- Création des index si ils n'existent pas
